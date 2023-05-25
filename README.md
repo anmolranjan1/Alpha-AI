@@ -1,2 +1,2 @@
-# Jarvis-AI
-Jarvis AI using Python
+# Alpha-AI
+Alpha AI using Python
