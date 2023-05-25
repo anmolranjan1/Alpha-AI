@@ -6,14 +6,13 @@ import datetime
 import random
 import openai
 from config import apikey
-import numpy as np
 
 chatStr = ""
 def chat(query):
     global chatStr
     print(chatStr)
     openai.api_key = apikey
-    chatStr += f"Harry: {query}\n Jarvis: "
+    chatStr += f"User: {query}\n Jarvis: "
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt= chatStr,
@@ -66,12 +65,12 @@ def takeCommand():
             print(f"User said: {query}")
             return query
         except Exception as e:
-            return "Some Error Occurred. Sorry from Jarvis"
+            return "Some Error Occurred. Sorry from Alpha"
 
 if __name__ == '__main__':
-    print('Welcome to Jarvis A.I')
-    speaker.Speak("Jarvis A I")
-    # say("Jarvis A.I")
+    print('Welcome to Alpha A.I')
+    speaker.Speak("Alpha A I")
+    # say("Alpha A.I")
     while True:
         print("Listening")
         query = takeCommand()
@@ -85,6 +84,7 @@ if __name__ == '__main__':
                 # say(text)
         # todo: Add a feature to play a specific song
         if "open music" in query:
+            # todo: Add path to the song you want to play
             musicPath = "C:/Users/anmol/Downloads/downfall-21371.mp3"
             os.startfile(musicPath)
             # import subprocess, sys
@@ -101,12 +101,13 @@ if __name__ == '__main__':
             # speaker.Speak(f"Sir the time is {hour} and {min} minutes")
 
         elif "open PDF".lower() in query.lower():
+            # todo: Add path to the PDF file you want to open
             os.startfile("C:/Users/anmol/OneDrive/Desktop/CAT 2 ADDA SOLUTION.pdf")
 
         elif "Using artificial intelligence".lower() in query.lower():
             ai(prompt=query)
 
-        elif "Jarvis Quit".lower() in query.lower():
+        elif "Alpha Quit".lower() in query.lower():
             exit()
 
         elif "reset chat".lower() in query.lower():
