@@ -15,6 +15,7 @@ response = openai.Completion.create(
 )
 
 print(response)
+# this is the response given by CHATGPT API
 '''
 {
   "choices": [
