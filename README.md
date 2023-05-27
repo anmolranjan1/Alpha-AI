@@ -9,7 +9,7 @@ Alpha AI is a personal assistant project implemented in Python. The assistant, n
 To run the Alpha AI project, make sure you have Python installed. Additionally, install the required libraries by running the following command:
 
 ```bash
-pip install pyttsx3 speech_recognition wikipedia pyjokes pywhatkit PyPDF2 psutil
+pip install pyttsx3 speech_recognition wikipedia pyjokes pywhatkit PyPDF2 psutil pyaudio
 ```
 You may also need to install the win32com library by executing the following command:
 ```bash
