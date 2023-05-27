@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
         elif "show notes" in query:
             speaker.Speak("Showing Notes")
-            file = open("hughie.txt", "r")
+            file = open("notes.txt", "r")
             print(file.read())
             speaker.Speak(file.read(6))
 
