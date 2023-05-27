@@ -1,25 +1,6 @@
 # Alpha-AI
 A Voice assistant model using Python
 
-## Libraries needed:
-
-import win32com.client
-import pyttsx3
-import speech_recognition as sr
-import datetime
-import wikipedia
-import webbrowser
-import os
-import random
-import smtplib
-import pyaudio
-import PyPDF2
-import pyjokes
-import pywhatkit as kit
-import psutil
-import subprocess
-import time
-
 ## Usage
 
 Alpha AI is a personal assistant project implemented in Python. The assistant, named "Alpha," performs various tasks based on voice commands. It utilizes several libraries and provides functionalities such as opening websites, retrieving information, telling jokes, playing music, and more.
