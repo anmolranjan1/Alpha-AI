@@ -25,12 +25,16 @@ def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour < 12:
         speaker.Speak("Good morning Sir..")
+        # say("Good morning Sir...")
     elif hour >= 12 and hour < 17:
         speaker.Speak("Good afternoon Sir..")
+        # say("Good afternoon Sir..")
     else:
         speaker.Speak("Good evening Sir")
+        # say("Good evening Sir")
     print("I am your personal assistant Alpha.")
     speaker.Speak("How may I help you? ")
+    # say("How may I help you? ")
 
 def takeCommand():
     r = sr.Recognizer()
@@ -40,6 +44,7 @@ def takeCommand():
         try:
             print("Recognizing...")
             query = r.recognize_google(audio, language="en-in")
+            # query = input("Enter: ")
             print(f"User said: {query}")
             # return query
         except Exception as e:
