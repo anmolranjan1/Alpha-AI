@@ -14,8 +14,6 @@ import pywhatkit as kit
 import psutil
 import subprocess
 import time
-# import openai
-# from config import apikey
 
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
 # def say(text):
@@ -51,56 +49,6 @@ def takeCommand():
             print("Say that again please...")
             return "None"
         return query
-
-# def sendEmail(to, content):
-#     server=smtplib.SMTP('smtp.gmail.com', 587)
-#     server.ehlo()
-#     server.starttls
-#     server.login('myemail', 'password')
-#     server.sendmail('myemail', to , content)
-
-# chatStr = ""
-# def chat(query):
-#     global chatStr
-#     print(chatStr)
-#     openai.api_key = apikey
-#     chatStr += f"User: {query}\n Alpha: "
-#     response = openai.Completion.create(
-#         model="text-davinci-003",
-#         prompt= chatStr,
-#         temperature=0.7,
-#         max_tokens=256,
-#         top_p=1,
-#         frequency_penalty=0,
-#         presence_penalty=0
-#     )
-#     # todo: Wrap this inside of a  try catch block
-#     speaker.Speak(response["choices"][0]["text"])
-#     chatStr += f"{response['choices'][0]['text']}\n"
-#     return response["choices"][0]["text"]
-#
-# def ai(prompt):
-#     openai.api_key = apikey
-#     text = f"OpenAI response for Prompt: {prompt} \n *************************\n\n"
-#
-#     response = openai.Completion.create(
-#       model="text-davinci-003",
-#       prompt=prompt,
-#       temperature=1,
-#       max_tokens=256,
-#       top_p=1,
-#       frequency_penalty=0,
-#       presence_penalty=0
-#     )
-#     # todo: Wrap this inside of a try catch block
-#     # print(response["choices"][0]["text"])
-#     text += response["choices"][0]["text"]
-#     if not os.path.exists("Openai"):
-#         os.mkdir("Openai")
-#
-#     # with open(f"Openai/prompt- {random.randint(1, 2343434356)}", "w") as f:
-#     with open(f"Openai/{''.join(prompt.split('intelligence')[1:]).strip()}.txt", "w") as f:
-#         f.write(text)
 
 if __name__ == '__main__':
     print('Welcome to Alpha A.I')
@@ -233,11 +181,3 @@ if __name__ == '__main__':
         else:
             print("Please use the README file for more commands available to be executed..")
 
-    #   elif "reset chat".lower() in query.lower():
-    #       chatStr = ""
-    #
-    #   else:
-    #     print("Chatting...")
-    #     chat(query)
-
-        # Speaker.speak(query)
