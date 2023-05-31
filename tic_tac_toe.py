@@ -15,7 +15,7 @@ Mark = 'X'
 
 
 # This Function Draws Game Board
-def DrawBoard():
+def drawBoard():
     print(" %c | %c | %c " % (board[1], board[2], board[3]))
     print("___|___|___")
     print(" %c | %c | %c " % (board[4], board[5], board[6]))
@@ -26,7 +26,7 @@ def DrawBoard():
 
 # This Function Checks position is empty or not
 def CheckPosition(x):
-    if (board[x] == ' '):
+    if board[x] == ' ':
         return True
     else:
         return False
@@ -37,23 +37,23 @@ def CheckPosition(x):
 def CheckWin():
     global Game
     # Horizontal winning condition
-    if (board[1] == board[2] and board[2] == board[3] and board[1] != ' '):
+    if board[1] == board[2] and board[2] == board[3] and board[1] != ' ':
         Game = Win
-    elif (board[4] == board[5] and board[5] == board[6] and board[4] != ' '):
+    elif board[4] == board[5] and board[5] == board[6] and board[4] != ' ':
         Game = Win
-    elif (board[7] == board[8] and board[8] == board[9] and board[7] != ' '):
+    elif board[7] == board[8] and board[8] == board[9] and board[7] != ' ':
         Game = Win
         # Vertical Winning Condition
-    elif (board[1] == board[4] and board[4] == board[7] and board[1] != ' '):
+    elif board[1] == board[4] and board[4] == board[7] and board[1] != ' ':
         Game = Win
-    elif (board[2] == board[5] and board[5] == board[8] and board[2] != ' '):
+    elif board[2] == board[5] and board[5] == board[8] and board[2] != ' ':
         Game = Win
-    elif (board[3] == board[6] and board[6] == board[9] and board[3] != ' '):
+    elif board[3] == board[6] and board[6] == board[9] and board[3] != ' ':
         Game = Win
         # Diagonal Winning Condition
-    elif (board[1] == board[5] and board[5] == board[9] and board[5] != ' '):
+    elif board[1] == board[5] and board[5] == board[9] and board[5] != ' ':
         Game = Win
-    elif (board[3] == board[5] and board[5] == board[7] and board[5] != ' '):
+    elif board[3] == board[5] and board[5] == board[7] and board[5] != ' ':
         Game = Win
         # Match Tie or Draw Condition
     elif (board[1] != ' ' and board[2] != ' ' and board[3] != ' ' and board[4] != ' ' and board[5] != ' ' and board[
@@ -62,12 +62,13 @@ def CheckWin():
     else:
         Game = Running
 
+
 print("Player 1 [X] --- Player 2 [O]\n")
 print("Please Wait...")
 time.sleep(3)
-while (Game == Running):
+while Game == Running:
     # os.system('cls')
-    DrawBoard()
+    drawBoard()
     if (player % 2 != 0):
         print("Player 1's chance")
         Mark = 'X'
@@ -81,7 +82,7 @@ while (Game == Running):
         CheckWin()
 
 os.system('cls')
-DrawBoard()
+drawBoard()
 if (Game == Draw):
     print("Game Draw")
 elif (Game == Win):
