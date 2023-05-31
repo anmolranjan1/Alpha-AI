@@ -1,4 +1,5 @@
-import win32com.client
+# import win32com.client
+import password
 import pyttsx3
 import speech_recognition as sr
 import datetime
@@ -6,7 +7,6 @@ import wikipedia
 import webbrowser
 import os
 import random
-import smtplib
 import pyaudio
 import PyPDF2
 import pyjokes
@@ -14,27 +14,31 @@ import pywhatkit as kit
 import psutil
 import subprocess
 import time
+# import tic_tac_toe
 
-speaker = win32com.client.Dispatch("SAPI.SpVoice")
-# def say(text):
-#     os.system(f'say "{text}"')
+engine = pyttsx3.init('sapi5')
+# by using init method we will store engine instance into variable , sapi5 is Microsoft speech api
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
+# speaker = win32com.client.Dispatch("SAPI.SpVoice")
+
+def say(text):
+    engine.say(text)
+    engine.runAndWait()
+    # os.system(f'say "{text}"')
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour < 12:
-        speaker.Speak("Good morning Sir..")
-        # say("Good morning Sir...")
+        say("Good morning Sir..")
     elif hour >= 12 and hour < 17:
-        speaker.Speak("Good afternoon Sir..")
-        # say("Good afternoon Sir..")
+        say("Good afternoon Sir..")
     else:
-        speaker.Speak("Good evening Sir")
-        # say("Good evening Sir")
+        say("Good evening Sir")
     print("I am your personal assistant Alpha.")
-    speaker.Speak("How may I help you? ")
-    # say("How may I help you? ")
+    say("How may I help you? ")
 
-def takeCommand():
+def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         # r.pause_threshold =  0.6
@@ -42,7 +46,6 @@ def takeCommand():
         try:
             print("Recognizing...")
             query = r.recognize_google(audio, language="en-in")
-            # query = input("Enter: ")
             print(f"User said: {query}")
             # return query
         except Exception as e:
@@ -50,51 +53,90 @@ def takeCommand():
             return "None"
         return query
 
+def quiz():
+    questions = [
+        ("When was the first known use of the word 'quiz'", "1781"),
+        ("Which built-in function can get information from the user", "input"),
+        ("Which keyword do you use to loop over a given list of elements", "for")
+    ]
+    for question, correct_answer in questions:
+        answer = input(f"{question}? ")
+        if answer == correct_answer:
+            print("Correct!")
+            say("Correct")
+        else:
+            print(f"The answer is {correct_answer!r}, not {answer!r}")
+            say(f"The answer is {correct_answer!r}, not {answer!r}")
+
+
 if __name__ == '__main__':
     print('Welcome to Alpha A.I')
     wishMe()
-    # speaker.Speak("Alpha A I")
+    # say("Alpha A I")
     # say("Alpha A.I")
     while True:
         print("Listening...")
-        query = takeCommand().lower()
+        query = takecommand().lower()
 
         # todo: Add more sites
         sites = [["youtube", "https://youtube.com"], ["wikipedia", "https://wikipedia.com"],
-                 ["google", "https://www.google.com"], ["stack overflow", "https://stackoverflow.com"]]
+                 ["google", "https://www.google.com"], ["stack overflow", "https://stackoverflow.com"],
+                 ["twitter", "http://www.twitter.com"], ["linkedIn", "https://www.linkedin.com"],
+                 ["instagram", "https://www.instagram.com"]]
         for site in sites:
             if f"Open {site[0]}".lower() in query.lower():
-                speaker.Speak(f"Opening {site[0]} sir...")
+                say(f"Opening {site[0]} sir...")
                 webbrowser.open(site[1])
-                # speaker.Speak(query)
-                # say(text)
 
         if "who made you" in query or "who created you" in query:
-            speaker.Speak("I have been created by Anmol Ranjan.")
+            say("I have been created by Anmol Ranjan.")
 
         elif 'how are you' in query:
-            speaker.Speak("I am fine! What about you?")
+            say("I am fine! What about you?")
 
         elif 'wikipedia' in query or 'search' in query:
-            speaker.Speak('Searching Wikipedia....')
+            say('Searching Wikipedia....')
             query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=2)
-            speaker.Speak("According to Wikipedia")
-            speaker.Speak(results)
+            say("According to Wikipedia")
+            say(results)
             print(results)
+            # to make a file with the content
+            file = open('wikipedia.txt', 'w')
+            file.write(results)
+
+        elif "write a note" in query:
+            say("What should I write sir?")
+            note = takecommand()
+            file = open('notes.txt', 'w')
+            say("Should I include  date and time?")
+            ans = takecommand()
+            if 'yes' in ans:
+                strTime = datetime.datetime.now().strftime(" %H %M %S")
+                file.write(strTime)
+                file.write("\n")
+                file.write(note)
+            else:
+                file.write(note)
+
+        elif "show the notes" in query:
+            say("Showing the Note")
+            file = open("notes.txt", "r")
+            print(file.read())
+            say(file.read(6))
 
         elif "joke" in query:
             print("Choose a category for joke")
-            speaker.Speak("Choose a category for joke")
+            say("Choose a category for joke")
             print('1. Neutral', '2. chuck', '3. all')
-            category = takeCommand().lower()
+            category = takecommand().lower()
             joke = pyjokes.get_joke(language='en', category=category)
             print(joke)
-            speaker.Speak(joke)
+            say(joke)
 
         elif "open music" in query:
             # todo: Add path to the song you want to play
-            musicPath = "C:\\Users\\anmol\\Downloads\\music"
+            musicPath = "sample-music.mp3"
             os.startfile(musicPath)
             # import subprocess, sys
             # opener = "open" if sys.platform == "darwin" else "xdg-open"
@@ -106,78 +148,102 @@ if __name__ == '__main__':
             strfTime = datetime.datetime.now().strftime("%H:%M:%S")
             # hour = datetime.datetime.now().strftime("%H")
             # min = datetime.datetime.now().strftime("%M")
-            speaker.Speak(f"Sir the time is {strfTime}")
-            # speaker.Speak(f"Sir the time is {hour} and {min} minutes")
-
-        # elif "Using artificial intelligence".lower() in query.lower():
-        #     ai(prompt=query)
+            say(f"Sir the time is {strfTime}")
+            # say(f"Sir the time is {hour} and {min} minutes")
 
         elif 'flip a coin' in query:
             coin = random.randrange(2)
             if (coin == 1):
-                speaker.Speak("Heads")
+                say("Heads")
             else:
-                speaker.Speak("Tails")
-
-        elif "write a note" in query:
-            speaker.Speak("What should I write sir?")
-            note = takeCommand()
-            file = open('notes.txt', 'w')
-            speaker.Speak("Should I include  date and time?")
-            ans = takeCommand()
-            if 'yes' in ans:
-                strTime = datetime.datetime.now().strftime(" %H %M %S")
-                file.write(strTime)
-                file.write("-")
-                file.write(note)
-            else:
-                file.write(note)
-
-        elif "show notes" in query:
-            speaker.Speak("Showing Notes")
-            file = open("notes.txt", "r")
-            print(file.read())
-            speaker.Speak(file.read(6))
+                say("Tails")
 
         # plays the video on youtube
         elif 'play online' in query:
-            speaker.Speak('What is the title of video')
-            video = takeCommand().lower()
+            say('What is the title of video')
+            video = takecommand().lower()
             kit.playonyt(video)
 
-        elif 'read pdf' in query:
-            book = open('sample.pdf', 'rb')
-            pdfReader = PyPDF2.PdfFileReader(book)
-            pages = pdfReader.numPages
-            speaker.Speak(f"Total number of pages in this book are {pages}")
-            speaker.Speak("Please enter the page number you want me to read.")
-            pg = int(input())
-            page = pdfReader.getPage(pg)
-            text = page.extractText()
-            speaker.Speak(text)
+        elif 'read pdf' in query.lower():
+            book = open('sample-pdf.pdf', 'rb')
+            pdf = PyPDF2.PdfReader(book)
+            pages = len(pdf.pages)
+            say(f"Total number of pages in this book are {pages}")
+            say("Please enter the page number you want me to read.")
+            pg = int(input("Page No.:"))
+            page = pdf.pages[pg]
+            text = page.extract_text()
+            say(text)
+
+        # generating a strong password
+        elif 'generate password' in query.lower():
+            password.generate(537)
+
+        # elif 'check password strength' in query.lower() or 'check password' in query.lower():
+        #     sample = input("Enter the password: ")
+        #     result = password.checker(sample)
+        #     # result = password.checker(sample)
+        #     print(result)
+        #     say(result)
+
+        elif 'start countdown' in query.lower() or 'countdown' in query.lower():
+            count = int(input("For how many seconds?? "))
+            while count:
+                mins, secs = divmod(count, 60)
+                timeformat = '{:02d}:{:02d}'.format(mins, secs)
+                print(timeformat, end='\r')
+                say(timeformat)
+                time.sleep(1)
+                count -= 1
+            say("stopped")
+
+
+        # a small quiz
+        elif 'quiz' in query.lower():
+            quiz()
+
+        # tic tac toe game
+        elif 'play' in query.lower():
+            os.system('tic_tac_toe.py')
+
+        # temperature convertor
+        elif 'convert' in query.lower():
+            if 'into celsius' in query.lower():
+                fahrenheit = float(input("Enter temperature in fahrenheit: "))
+                celsius = (fahrenheit-32) / 1.8
+                say(f"{fahrenheit} degree Fahrenheit is equal to {celsius} degree Celsius.")
+                print(f"{fahrenheit} degree Fahrenheit is equal to {celsius} degree Celsius.")
+            else:
+                celsius = float(input("Enter temperature in celsius: "))
+                fahrenheit = (celsius*1.8) + 32
+                say(f"{celsius} degree Celsius is equal to {fahrenheit} degree Fahrenheit.")
+                print(f"{fahrenheit} degree Fahrenheit is equal to {celsius} degree Celsius.")
 
         elif 'battery percentage' in query:
             battery = psutil.sensors_battery()
             bat = battery.percent
-            speaker.Speak(f"Sir, your system has {bat} percent battery")
+            say(f"Sir, your system has {bat} percent battery")
             print(f"Sir, your system has {bat} percent battery")
 
-        elif 'shutdown system' in query:
-            speaker.Speak("Hold On a Sec ! Your system is on its way to shut down")
+        elif 'shutdown' in query:
+            say("Hold On a Sec ! Your system is on its way to shut down")
             subprocess.call('shutdown / p /f')
 
         elif "restart" in query:
+            say("Restarting")
             subprocess.call(["shutdown", "/r"])
 
         elif "hibernate" in query or "sleep" in query:
-            speaker.Speak("Hibernating")
+            say("Hibernating")
             subprocess.call("shutdown / h")
 
         elif "log off" in query or "sign out" in query:
-            speaker.Speak("Make sure all the application are closed before sign-out")
+            say("Make sure all the application are closed before sign-out")
             time.sleep(5)
             subprocess.call(["shutdown", "/l"])
 
-        else:
-            print("Please use the README file for more commands available to be executed..")
+        elif 'quit' in query.lower():
+            exit()
 
+        else:
+            print("Please check the README file for more commands available to be executed..")
