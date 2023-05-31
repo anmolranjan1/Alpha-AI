@@ -14,12 +14,15 @@ import pywhatkit as kit
 import psutil
 import subprocess
 import time
+
 # import tic_tac_toe
 
 engine = pyttsx3.init('sapi5')
 # by using init method we will store engine instance into variable , sapi5 is Microsoft speech api
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
+
+
 # speaker = win32com.client.Dispatch("SAPI.SpVoice")
 
 def say(text):
@@ -27,16 +30,18 @@ def say(text):
     engine.runAndWait()
     # os.system(f'say "{text}"')
 
+
 def wishMe():
     hour = int(datetime.datetime.now().hour)
-    if hour >= 0 and hour < 12:
+    if 0 <= hour < 12:
         say("Good morning Sir..")
-    elif hour >= 12 and hour < 17:
+    elif 12 <= hour < 17:
         say("Good afternoon Sir..")
     else:
         say("Good evening Sir")
     print("I am your personal assistant Alpha.")
     say("How may I help you? ")
+
 
 def takecommand():
     r = sr.Recognizer()
@@ -52,6 +57,7 @@ def takecommand():
             print("Say that again please...")
             return "None"
         return query
+
 
 def quiz():
     questions = [
@@ -153,12 +159,12 @@ if __name__ == '__main__':
 
         elif 'flip a coin' in query:
             coin = random.randrange(2)
-            if (coin == 1):
+            if coin == 1:
                 say("Heads")
             else:
                 say("Tails")
 
-        # plays the video on youtube
+        # plays the video on YouTube
         elif 'play online' in query:
             say('What is the title of video')
             video = takecommand().lower()
@@ -197,7 +203,6 @@ if __name__ == '__main__':
                 count -= 1
             say("stopped")
 
-
         # a small quiz
         elif 'quiz' in query.lower():
             quiz()
@@ -210,12 +215,12 @@ if __name__ == '__main__':
         elif 'convert' in query.lower():
             if 'into celsius' in query.lower():
                 fahrenheit = float(input("Enter temperature in fahrenheit: "))
-                celsius = (fahrenheit-32) / 1.8
+                celsius = (fahrenheit - 32) / 1.8
                 say(f"{fahrenheit} degree Fahrenheit is equal to {celsius} degree Celsius.")
                 print(f"{fahrenheit} degree Fahrenheit is equal to {celsius} degree Celsius.")
             else:
                 celsius = float(input("Enter temperature in celsius: "))
-                fahrenheit = (celsius*1.8) + 32
+                fahrenheit = (celsius * 1.8) + 32
                 say(f"{celsius} degree Celsius is equal to {fahrenheit} degree Fahrenheit.")
                 print(f"{fahrenheit} degree Fahrenheit is equal to {celsius} degree Celsius.")
 
@@ -246,4 +251,4 @@ if __name__ == '__main__':
             exit()
 
         else:
-            print("Please check the README file for more commands available to be executed..")
+            print("...")
