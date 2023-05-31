@@ -1,6 +1,7 @@
 import secrets
 import string
 
+
 def generate(self):
     # define the alphabet
     letters = string.ascii_letters
