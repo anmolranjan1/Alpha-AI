@@ -1,5 +1,4 @@
 # import win32com.client
-import password
 import pyttsx3
 import speech_recognition as sr
 import datetime
@@ -14,12 +13,13 @@ import pywhatkit as kit
 import psutil
 import subprocess
 import time
+import password
+import tic_tac_toe
 
 engine = pyttsx3.init('sapi5')
 # by using init method we will store engine instance into variable , sapi5 is Microsoft speech api
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
-
 
 # speaker = win32com.client.Dispatch("SAPI.SpVoice")
 
@@ -208,7 +208,8 @@ if __name__ == '__main__':
 
         # tic tac toe game
         elif 'play' in query.lower():
-            os.system('tic_tac_toe.py')
+            tic_tac_toe.game()
+            # os.system('tic_tac_toe.py')
 
         # temperature convertor
         elif 'convert' in query.lower():
