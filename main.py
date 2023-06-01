@@ -15,8 +15,6 @@ import psutil
 import subprocess
 import time
 
-# import tic_tac_toe
-
 engine = pyttsx3.init('sapi5')
 # by using init method we will store engine instance into variable , sapi5 is Microsoft speech api
 voices = engine.getProperty('voices')
@@ -185,12 +183,13 @@ if __name__ == '__main__':
         elif 'generate password' in query.lower():
             password.generate(537)
 
-        # elif 'check password strength' in query.lower() or 'check password' in query.lower():
-        #     sample = input("Enter the password: ")
-        #     result = password.checker(sample)
-        #     # result = password.checker(sample)
-        #     print(result)
-        #     say(result)
+        #checks password strength
+        elif 'check password strength' in query.lower() or 'check' in query.lower():
+            sample = input("Enter the password: ")
+            result = password.checker(sample)
+            # result = password.checker(sample)
+            print(result)
+            say(result)
 
         elif 'start countdown' in query.lower() or 'countdown' in query.lower():
             count = int(input("For how many seconds?? "))
