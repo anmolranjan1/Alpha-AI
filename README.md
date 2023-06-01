@@ -34,7 +34,7 @@ pip install psutil
 * Coin Toss: Alpha A.I can simulate flipping a coin and announce the result as heads or tails.
 * Online Video Playback: Users can request Alpha A.I to search and play videos from YouTube.
 * PDF Text-to-Speech: The program can read specific pages of a PDF file and convert the text to speech.
-* Password Generation: Alpha A.I can generate strong passwords.
+* Password Generation and Strengh Checker: Alpha A.I can generate strong passwords and can also check strength of passwords.
 * Countdown Timer: Users can initiate countdowns for a specified number of seconds, and Alpha A.I will announce the remaining time.
 * Quiz: The program can conduct a small quiz by asking questions and checking the user's answers.
 * Temperature Conversion: Alpha A.I can convert temperatures between Celsius and Fahrenheit.
