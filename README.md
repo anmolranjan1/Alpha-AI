@@ -42,3 +42,14 @@ pip install psutil
 * System Actions: Alpha A.I can perform system actions such as shutdown, restart, hibernate, and log off.
 
 The project provides a wide range of features and demonstrates the use of various Python libraries and modules for speech recognition, text-to-speech conversion, web scraping, file handling, system interactions, and more.
+
+## Contributing
+
+Contributions to the project are welcome. If you would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make the necessary changes.
+4. Commit your changes.
+5. Push your changes to your forked repository.
+6. Submit a pull request describing your changes.
